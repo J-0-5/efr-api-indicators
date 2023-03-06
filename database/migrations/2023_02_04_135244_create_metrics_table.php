@@ -15,11 +15,12 @@ class CreateMetricsTable extends Migration
     {
         Schema::create('metrics', function (Blueprint $table) {
             $table->id();
-            $table->string('reference');
-            $table->string('source');
-            $table->string('description');
-            $table->string('unit');
-            $table->string('frequency');
+            $table->string('associate_to')->nullable();
+            $table->string('reference')->nullable();
+            $table->string('source')->nullable();
+            $table->string('description')->nullable();
+            $table->string('unit')->nullable();
+            $table->string('frequency')->nullable();
             $table->timestamps();
         });
     }

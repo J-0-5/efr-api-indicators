@@ -20,6 +20,7 @@ class CreateCensusTable extends Migration
             $table->foreign('metric_id')->references('id')->on('metrics');
             $table->string('value');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

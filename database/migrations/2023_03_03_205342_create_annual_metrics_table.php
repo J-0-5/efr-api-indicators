@@ -21,6 +21,7 @@ class CreateAnnualMetricsTable extends Migration
             $table->foreign('metric_id')->references('id')->on('metrics');
             $table->float('value');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

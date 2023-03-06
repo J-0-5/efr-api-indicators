@@ -10,6 +10,7 @@ class Metric extends Model
     protected $table = 'metrics';
 
     protected $fillable = [
+        'associate_to',
         'reference',
         'source',
         'description',
@@ -22,6 +23,7 @@ class Metric extends Model
         return Validator::make(
             $request->all(),
             [
+                'associate_to' => 'nullable|string',
                 'reference' => 'nullable|string',
                 'source' => 'nullable|string',
                 'description' => 'nullable|string',

@@ -15,11 +15,12 @@ class CreateMonthlyMetricsTable extends Migration
     {
         Schema::create('monthly_metrics', function (Blueprint $table) {
             $table->id();
-            $table->date('date');
+            $table->date('date')->nullable();
             $table->unsignedBigInteger('metric_id')->nullable();
             $table->foreign('metric_id')->references('id')->on('metrics');
-            $table->float('value');
+            $table->double('value')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
