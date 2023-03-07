@@ -16,10 +16,10 @@ class CreateAnnualMetricsTable extends Migration
         Schema::create('annual_metrics', function (Blueprint $table) {
             $table->id();
             $table->string('state');
-            $table->date('date');
+            $table->integer('date');
             $table->unsignedBigInteger('metric_id')->nullable();
             $table->foreign('metric_id')->references('id')->on('metrics');
-            $table->float('value');
+            $table->double('value');
             $table->timestamps();
             $table->softDeletes();
         });

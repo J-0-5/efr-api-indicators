@@ -2,8 +2,10 @@
 
 namespace App\Modules\MetricModule\Imports;
 
+use App\Modules\MetricModule\CensusMetric;
 use App\Modules\MetricModule\Metric;
 use App\Modules\MetricModule\MonthlyMetric;
+use App\Modules\MetricModule\UsdaGrainPriceMetric;
 use App\Modules\MetricModule\WeeklyMetric;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Illuminate\Support\Collection;
@@ -24,12 +26,12 @@ class MetricImport implements ToCollection
                 continue;
             }
             foreach ($references as $index => $reference) {
-                $value = doubleval(str_replace(',', '', $row[$index]));
-                if ($index == 0 || $value == 0) {
+                $value = $row[$index] ?? null;
+                if ($index == 0 || is_null($value)) {
                     continue;
                 }
                 $metric = Metric::where('reference', $reference)->first();
-                WeeklyMetric::create([
+                UsdaGrainPriceMetric::create([
                     'date' => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[0]),
                     'metric_id' => $metric->id,
                     'value' => $value,

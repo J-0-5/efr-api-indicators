@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsdaGrainPriceTable extends Migration
+class CreateUsdaGrainPricesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateUsdaGrainPriceTable extends Migration
      */
     public function up()
     {
-        Schema::create('usda_grain_price', function (Blueprint $table) {
+        Schema::create('usda_grain_prices', function (Blueprint $table) {
             $table->id();
             $table->date('date');
             $table->unsignedBigInteger('metric_id')->nullable();
@@ -31,6 +31,6 @@ class CreateUsdaGrainPriceTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('usda_grain_price');
+        Schema::dropIfExists('usda_grain_prices');
     }
 }

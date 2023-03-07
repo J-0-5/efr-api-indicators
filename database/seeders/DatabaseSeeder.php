@@ -1,6 +1,7 @@
 <?php
 
 namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,6 +16,10 @@ class DatabaseSeeder extends Seeder
         $this->call([
             MetricSeeder::class,
             MonthlyMetricSeeder::class,
+            WeeklyMetricSeeder::class,
+            AnnualMetricSeeder::class,
+            UsdaGrainPriceMetricSeeder::class,
+            // CensusMetricSeeder::class,
         ]);
     }
 }

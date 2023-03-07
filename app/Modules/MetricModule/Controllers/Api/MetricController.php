@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\MetricModule\Api\Controllers;
+namespace App\Modules\MetricModule\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Traits\RestActions;
