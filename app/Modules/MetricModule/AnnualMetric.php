@@ -32,10 +32,21 @@ class AnnualMetric extends Model
         }
     }
 
+    public function scopeWhereMetricReference($query, $value)
+    {
+        if (!is_null($value)) {
+            $query->whereHas('getMetric', function ($query) use ($value) {
+                $query->where('reference', $value);
+            });
+        }
+    }
+
     public function getAnnualMetrics($request)
     {
         try {
-            $annual_metrics = $this::whereYear($request->year)->get();
+            $annual_metrics = $this::whereYear($request->year)
+                ->whereMetricReference($request->metric_reference)
+                ->get();
 
             if (count($annual_metrics ?? []) == 0) {
                 return $this->respond(404, null, 'annual_metrics not found', 'no Annual metrics found');
@@ -43,7 +54,7 @@ class AnnualMetric extends Model
             $annual_metrics = AnnualMetricResource::collection($annual_metrics);
             return $this->respond(200, $annual_metrics, null, 'Annual metrics successfully found');
         } catch (\Exception $e) {
-            return $this->respond(500, [], $e->getMessage() . ' | File: ' . $e->getFile() . ' | Line: ' . $e->getLine(), 'Error searching Metric');
+            return $this->respond(500, [], $e->getMessage() . ' | File: ' . $e->getFile() . ' | Line: ' . $e->getLine(), 'Error searching Annual metrics');
         }
     }
 }
