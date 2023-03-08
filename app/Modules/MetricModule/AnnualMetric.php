@@ -25,19 +25,19 @@ class AnnualMetric extends Model
         return $this->belongsTo(Metric::class, 'metric_id');
     }
 
-    public function scopeWhereYear($query, $value)
-    {
-        if (!is_null($value)) {
-            $query->where('date', $value);
-        }
-    }
-
     public function scopeWhereMetricReference($query, $value)
     {
         if (!is_null($value)) {
             $query->whereHas('getMetric', function ($query) use ($value) {
                 $query->where('reference', $value);
             });
+        }
+    }
+    
+    public function scopeWhereYear($query, $value)
+    {
+        if (!is_null($value)) {
+            $query->where('date', $value);
         }
     }
 
