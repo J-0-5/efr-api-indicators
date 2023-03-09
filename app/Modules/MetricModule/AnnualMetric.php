@@ -33,7 +33,7 @@ class AnnualMetric extends Model
             });
         }
     }
-    
+
     public function scopeWhereYear($query, $value)
     {
         if (!is_null($value)) {
@@ -45,9 +45,16 @@ class AnnualMetric extends Model
     {
         try {
             $annual_metrics = $this::whereYear($request->year)
-                ->whereMetricReference($request->metric_reference)
-                ->get();
+                ->whereMetricReference($request->metric_reference);
 
+            if (!is_null($request->pagination)) {
+                $limit = $request->pagination * ($request->page ?? 1);
+                $offset = $limit - $request->pagination;
+
+                // dd($offset, $limit);
+                $annual_metrics =  $annual_metrics->offset($offset)->limit($limit);
+            }
+            $annual_metrics =   $annual_metrics->get();
             if (count($annual_metrics ?? []) == 0) {
                 return $this->respond(404, null, 'annual_metrics not found', 'no Annual metrics found');
             }
