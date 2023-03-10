@@ -45,18 +45,19 @@ class AnnualMetric extends Model
     {
         try {
             $annual_metrics = $this::whereYear($request->year)
-                ->whereMetricReference($request->metric_reference);
+                ->whereMetricReference($request->metric_reference)
+                ->orderBy('id', 'DESC');
 
             if (!is_null($request->pagination)) {
-                $limit = $request->pagination * ($request->page ?? 1);
-                $offset = $limit - $request->pagination;
+                $limit = $request->pagination;
+                $until = $limit * ($request->page ?? 1);
+                $offset = $until - $limit;
 
-                // dd($offset, $limit);
-                $annual_metrics =  $annual_metrics->offset($offset)->limit($limit);
+                $annual_metrics = $annual_metrics->limit($limit)->offset($offset);
             }
-            $annual_metrics =   $annual_metrics->get();
+            $annual_metrics = $annual_metrics->get();
             if (count($annual_metrics ?? []) == 0) {
-                return $this->respond(404, null, 'annual_metrics not found', 'no Annual metrics found');
+                return $this->respond(404, null, 'annual_metrics not found', 'Annual metrics not found');
             }
             $annual_metrics = AnnualMetricResource::collection($annual_metrics);
             return $this->respond(200, $annual_metrics, null, 'Annual metrics successfully found');
